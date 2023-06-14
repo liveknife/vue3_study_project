@@ -4,9 +4,11 @@
     </el-button>
     <div>{{ num }}</div>
     <div>当前值为：{{ data.count }}</div>
+    <HelloWorld msg="hello typescript"></HelloWorld>
 </template>
   
 <script lang="ts" setup>
+import HelloWorld from '../../components/HelloWorld.vue';
 import { ref, reactive } from 'vue'
 // import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'

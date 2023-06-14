@@ -1,13 +1,11 @@
 <template>
-    <div class="home">
+    <div>
         首页
     </div>
 </template>
+
 <script setup lang="ts">
 
 </script>
-<style>
-.home {
-    font-size: 30px;
-}
-</style>
+
+<style scoped lang="scss"></style>
