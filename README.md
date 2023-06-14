@@ -1,5 +1,13 @@
+<!--
+ * @Author: MaKun MaKunn@163.com
+ * @Date: 2023-06-14 13:33:12
+ * @LastEditors: MaKun MaKunn@163.com
+ * @LastEditTime: 2023-06-14 13:44:43
+ * @FilePath: \vue3_study_project\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 # Vue 3 + TypeScript + Vite
-
+# Vue 3 + TS + Vite 练习项目环境搭建以及vue全家桶配置 及vite打包
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 ## Recommended IDE Setup
