@@ -19,6 +19,8 @@
     "@vitejs/plugin-vue": "^4.1.0",
     "axios": "^1.4.0",
     "sass": "^1.63.4",
+    "lodash": "^4.17.21",
+    "three": "^0.133.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vue-router": "^4.2.2",

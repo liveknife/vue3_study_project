@@ -1,88 +1,68 @@
 <template>
-  <el-button type="primary"
-             style="margin-left: 16px"
-             @click="skipRouter">
-    跳转
-  </el-button>
-  <div>{{ num }}</div>
-  <div>当前值为：{{ data.count }}</div>
-
-  <button @click="handleLogin">Login</button>
-  <button @click="setInter">添加</button>
-  <input ref="username"
-         placeholder="name..."
-         v-model="state.nameval">
-  <input ref="password"
-         placeholder="password...."
-         v-model="state.pasval">
-  <div v-for="(item,i) in state.userList"
-       :key="i"
-       @click="deleteUser(i)">{{ item.name }}</div>
-<button @click="getUserInfo">get</button>
+  <div>
+    <canvas ref="canvas" style="width: 100%; height: 100vh;"></canvas>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, reactive } from "vue";
-// import { ElMessageBox } from 'element-plus'
-import { useRouter } from "vue-router";
-import { useStore } from "../../stores/index";
-import axios from "axios";
-let num = ref(10);
-const router = useRouter();
-const store = useStore;
-const data = reactive({
-  count: 0
-});
-const state = ref({
-  nameval: "",
-  pasval: "",
-  userList: []
-});
-function handleLogin() {
-  axios({
-    method: "get",
-    url: `http://localhost:8888/user/login?username=${state.value.nameval}&password=${state.value.pasval}`
-  }).then(res => {
-    console.log(res);
-  });
-}
-// 添加
-function setInter() {
-  axios({
-    method: "post",
-    url: `http://localhost:8888/user/home?username=${state.value.nameval}&password=${state.value.pasval}`
-  }).then(res => {
-    console.log(res);
-    getUserInfo();
-  });
-}
-// 获取所有数据
-function getUserInfo() {
-  axios({
-    method: "get",
-    url: `http://localhost:8888/user/userinfo`
-  }).then(res => {
-    state.value.userList = res.data;
-  });
-}
-// 删除所点击的数据
-function deleteUser(i: number) {
-  const id:any = state.value.userList[i].id;
-  axios({
-    method: "post",
-    url: `http://localhost:8888/user/deleteUser?id=${id}`
-  }).then(res => {
-    console.log(res);
-    getUserInfo();
-  });
-}
-function skipRouter() {
-  data.count++;
-  num = ref(100);
-  console.log(store);
-  if (data.count >= 100) {
-    data.count = 0;
-    router.push("/home");
+<script>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import * as THREE from 'three'
+
+export default {
+  name: 'App',
+  setup () {
+    const canvas = ref(null)
+    let scene, camera, renderer, cube
+
+    onMounted(() => {
+      // 创建场景
+      scene = new THREE.Scene()
+
+      // 创建相机
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+      camera.position.z = 5
+
+      // 创建渲染器
+      renderer = new THREE.WebGLRenderer({ canvas: canvas.value, antialias: true })
+      renderer.setSize(window.innerWidth, window.innerHeight)
+
+      // 创建立方体
+      const geometry = new THREE.BoxGeometry()
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+      cube = new THREE.Mesh(geometry, material)
+      scene.add(cube)
+
+      // 动画循环
+      const animate = function () {
+        requestAnimationFrame(animate)
+
+        // 旋转立方体
+        cube.rotation.x += 0.01
+        cube.rotation.y += 0.01
+
+        // 渲染场景和相机
+        renderer.render(scene, camera)
+      }
+
+      animate()
+    })
+
+    onBeforeUnmount(() => {
+      // 清除场景内的对象和资源
+      scene.remove(cube)
+      cube.geometry.dispose()
+      cube.material.dispose()
+      renderer.dispose()
+    })
+
+    return { canvas }
   }
 }
 </script>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+}
+</style>
